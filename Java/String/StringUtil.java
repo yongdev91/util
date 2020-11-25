@@ -33,4 +33,94 @@ class StringUtil {
 
     return email;
   }
+
+  /**
+  * 랜덤 패스워드 생성
+  */
+  public static String getRandomPasswd() {
+    	 char [] pwCollectionSpCha = new char[] {
+    			 'A','B','C','D','E','F','G','H','I','J','K','L','M'
+                 ,'N','O','P','Q','R','S','T','U','V','W','X','Y','Z'
+                 ,'a','b','c','d','e','f','g','h','i','j','k','l','m'
+                 ,'n','o','p','q','r','s','t','u','v','w','x','y','z'};
+    	 char [] charsetNumber = new char[] {
+    			 '0','1','2','3','4','5','6','7','8','9'};
+
+    	 char [] charsetSpecial = new char[] {
+    			 '!', '@', '#', '$', '%', '^', '&', '+', '='};
+
+    	 return getRandPw(1, charsetNumber) + getRandPw(8, pwCollectionSpCha) + getRandPw(1, charsetSpecial);
+    }
+
+    public static String getRandPw(int size, char[] pwCollection){
+        String ranPw = "";
+        for (int i = 0; i < size; i++) {
+            int selectRandomPw = (int) (Math.random() * (pwCollection.length));
+            ranPw += pwCollection[selectRandomPw];
+        }
+        return ranPw;
+    }
+
+    /**
+	 * 모든 html 태그를 치환 (정규식)
+	 * @param html string
+	 * @return
+	 * @throws Exception
+	 */
+	public static String replaceTag(String html, String replaceText) throws Exception {
+		return html.replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", replaceText);
+	}
+
+    // [박형준] 현재 Class와 MethodName
+    public static String getClassMethodName( StackTraceElement[] stacks, String addStr ){
+    	StringBuffer sb = new StringBuffer("");
+    	if( stacks != null ){
+    		StackTraceElement currentStack = stacks[0];
+    		sb.append("Class - " + currentStack.getClassName());
+    		sb.append(", ");
+    		sb.append("Method - " + currentStack.getMethodName());
+
+    	}
+    	if( !"".equals(StringUtil.nvl(addStr,"")) ){
+    		sb.append(", ");
+    		sb.append(addStr);
+    	}
+
+    	return sb.toString();
+    }
+
+    /**
+	 * 모든 html 태그를 제거 (정규식)
+	 * @param html string
+	 * @return
+	 * @throws Exception
+	 */
+	public static String removeTag(String html) throws Exception {
+		return html.replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "");
+	}
+
+  /**
+	 * 문자열을 잘라 List로 리턴
+	 * @param strValue : 문자열
+	 * @param regex : 구분자
+	 * @return ArrayList<String>
+	 */
+	public static List<String> splitStrList (String strValue, String regex) {
+		List<String> resultList = new ArrayList<String>();
+
+		String str = strValue.trim();
+		try {
+			if(isNotEmpty(str)) {
+				String [] tmpStrList = str.split(regex);
+				for(String sValue : tmpStrList) {
+					resultList.add(sValue);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return resultList;
+		}
+
+		return resultList;
+	}
 }
