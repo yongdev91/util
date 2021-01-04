@@ -123,4 +123,15 @@ class StringUtil {
 
 		return resultList;
 	}
+
+  /**
+  * String null check
+  */
+  public static boolean isNull(String str) {
+    if (str != null) {
+      str = str.trim();
+    }
+
+    return (str == null || "".equals(str));
+  }
 }
