@@ -134,4 +134,11 @@ class StringUtil {
 
     return (str == null || "".equals(str));
   }
+
+  /**
+  * null일때 대체값
+  */
+  public static String nvl(String str, String ifNull){
+    return null2string(str, ifNull);
+  }
 }
